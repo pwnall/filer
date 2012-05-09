@@ -1,0 +1,21 @@
+<header id="header">
+  <nav id="main-menu">
+    <ol>
+      <li>
+        <%= link_to root_path do %>
+          <h1>
+            <%= image_tag 'logo.png', class: 'logo', alt: '' %>
+            <span class="app-name">
+              Filer
+            </span>
+          </h1>
+        <% end %>
+      </li>
+      <% if current_user %>
+      <%= render 'layouts/menu' %>
+      <% else %>
+      <li> </li>
+      <% end %>
+    </ol>
+  </nav>
+</header>

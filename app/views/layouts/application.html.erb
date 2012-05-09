@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Filer</title>
+<%= csrf_meta_tag %>
+<%= favicon_link_tag %>
+<%= stylesheet_link_tag 'application' %>
+<%= javascript_include_tag 'application' %>
+</head>
+<body>
+<%= render 'layouts/header' %>
+
+<div id="real-body">
+<%= render 'layouts/status_bar' %>
+<div id="content-wrapper">
+<article id="main">
+<%= yield %>
+</article>
+</div>
+</div>
+
+<%= render 'layouts/footer' %>
+</body>
+</html>
