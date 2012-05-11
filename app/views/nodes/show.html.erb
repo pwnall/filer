@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Type:</b>
+  <%= @node.type %>
+</p>
+
+<p>
+  <b>Size:</b>
+  <%= @node.size %>
+</p>
+
+<p>
+  <b>Block:</b>
+  <%= @node.block_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_node_path(@node) %> |
+<%= link_to 'Back', nodes_path %>

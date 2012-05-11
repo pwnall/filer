@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  path: MyString
+  owner_id: 1
+  node_id: 1
+  serial: 1
+
+two:
+  path: MyString
+  owner_id: 1
+  node_id: 1
+  serial: 1
