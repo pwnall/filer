@@ -10,7 +10,7 @@ class CreateNodes < ActiveRecord::Migration
       t.timestamp :updated_at, null: false
     end
   
-    add_index :nodes, :owner, unique: false, null: true
-    add_index :nodes, :block0, unique: false, null: true
+    add_index :nodes, :owner_id, unique: false, null: true
+    add_index :nodes, :block0_id, unique: false, null: true
   end
 end

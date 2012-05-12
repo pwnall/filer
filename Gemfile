@@ -14,17 +14,18 @@ gem 'sqlite3', '>= 1.3.6'
 group :assets do
   gem 'sass-rails',   '>= 3.2.3'
   gem 'coffee-rails', '>= 3.2.1'
-  gem 'therubyracer', :platform => :ruby
+  gem 'therubyracer', platform: :ruby
   gem 'uglifier', '>= 1.0.3'
 end
 
 gem 'jquery-rails', '2.0.2'
 
 gem 'authpwn_rails', '>= 0.10.10'
+gem 'cancan', '>= 1.6.7'
 gem 'configvars_rails', '>= 0.5.3'
 gem 'pwnstyles_rails', '>= 0.1.22'
-gem 'sys-filesystem', '>= 1.0.0'
+gem 'sys-filesystem', '>= 1.0.0', require: 'sys/filesystem'
 
 group :development, :test do
-#  gem 'ruby-debug19', :require => 'ruby-debug'
+#  gem 'ruby-debug19', require: 'ruby-debug'
 end

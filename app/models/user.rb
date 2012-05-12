@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
 
   # Add your extensions to the User class here.
   
+  # Admins can mess with the server.
+  validates :admin, inclusion: { in: [true, false] }
+  
   # The blocks assigned to a user's files.
   has_many :blocks, inverse_of: :owner, foreign_key: 'owner_id',
                     dependent: :nullify
