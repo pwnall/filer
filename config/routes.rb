@@ -1,4 +1,6 @@
 Filer::Application.routes.draw do
+  resources :devices
+
   resources :nodes
 
   authpwn_session

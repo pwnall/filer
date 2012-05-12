@@ -23,6 +23,7 @@ gem 'jquery-rails', '2.0.2'
 gem 'authpwn_rails', '>= 0.10.10'
 gem 'configvars_rails', '>= 0.5.3'
 gem 'pwnstyles_rails', '>= 0.1.22'
+gem 'sys-filesystem', '>= 1.0.0'
 
 group :development, :test do
 #  gem 'ruby-debug19', :require => 'ruby-debug'

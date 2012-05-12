@@ -10,4 +10,7 @@ class Node < ActiveRecord::Base
   # The user that can read and write to this node.
   belongs_to :owner, class: 'User', inverse_of: :nodes
   validates :owner, presence: true
+  
+  # Block list for blocks with multiple nodes.
+  has_many :blocks, foreign_key: 'node0_id', inverse_of: :node0, order: :serial
 end
