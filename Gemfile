@@ -20,7 +20,7 @@ end
 
 gem 'jquery-rails', '2.0.2'
 
-gem 'authpwn_rails', '>= 0.10.10'
+gem 'authpwn_rails', '>= 0.10.11'
 gem 'cancan', '>= 1.6.7'
 gem 'configvars_rails', '>= 0.5.3'
 gem 'pwnstyles_rails', '>= 0.1.22'
