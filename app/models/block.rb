@@ -18,4 +18,10 @@ class Block < ActiveRecord::Base
   # This should be replaced by a list of devices, for redundant storage.
   belongs_to :device, inverse_of: :blocks
   validates :device, presence: true
+  
+  # The system's block size.
+  # @return [Integer] system block size, guaranteed to be a power of two
+  def self.size
+    1.megabyte
+  end
 end

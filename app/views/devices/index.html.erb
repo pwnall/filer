@@ -3,7 +3,8 @@
 <table>
   <tr>
     <th>Path</th>
-    <th>Mount path</th>
+    <th>Device Root</th>
+    <th>Free Blocks</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,7 +13,8 @@
 <% @devices.each do |device| %>
   <tr>
     <td><%= device.path %></td>
-    <td><%= device.mount_path %></td>
+    <td><%= device.dev_path %></td>
+    <td><%= device.free_block_count %></td>
     <td><%= link_to 'Show', device %></td>
     <td><%= link_to 'Edit', edit_device_path(device) %></td>
     <td><%= link_to 'Destroy', device, confirm: 'Are you sure?', method: :delete %></td>

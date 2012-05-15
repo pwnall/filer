@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+dev_path = Rails.root.join('tmp', 'blocks').to_s
+FileUtils.mkdir_p dev_path
+dev = Device.create :path => dev_path

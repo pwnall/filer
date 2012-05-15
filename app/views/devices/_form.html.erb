@@ -13,11 +13,8 @@
 
   <div class="field">
     <%= f.label :path %><br />
-    <%= f.text_field :path %>
-  </div>
-  <div class="field">
-    <%= f.label :mount_path %><br />
-    <%= f.text_field :mount_path %>
+    <%= f.text_field :path, :list => :dev_paths %>
+    <%= dev_paths_datalist %>
   </div>
   <div class="actions">
     <%= f.submit %>
