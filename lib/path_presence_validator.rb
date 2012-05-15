@@ -1,10 +1,10 @@
 # Ensures that an attribute is an existing path on the server file-system.
 class PathPresenceValidator < ActiveModel::EachValidator
   def check_validity!
-    if options[:access] && ![:read, :write].include?(option[:access])
+    if options[:access] && ![:read, :write].include?(options[:access])
       raise ArgumentError, 'Invalid :access option value'
     end
-    if options[:type] && ![:file, :directory].include?(option[:type])
+    if options[:type] && ![:file, :directory].include?(options[:type])
       raise ArgumentError, 'Invalid :type option value'
     end
     super
