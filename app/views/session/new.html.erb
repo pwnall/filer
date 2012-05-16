@@ -1,40 +1,22 @@
-<% if flash[:notice] %>
-<p class="notice"><%= flash[:notice] %></p>
-<% end %>
-<% if flash[:alert] %>
-<p class="alert"><%= flash[:alert] %></p>
-<% end %>
+<h1>Welcome to Filer</h1>
 
-<% if @redirect_url %>
 <p>
-  We need you to log in before we can show you the page that you are trying to
-  view.
+  <%= image_tag 'feature1.png', :alt => '' %>
+  Specially designed for large files, such as photos, movies, and software. 
 </p>
-<% end %>
+<p>
+  <%= image_tag 'feature2.png', :alt => '' %>
+  Make files available offline, so you won't get bored on your next flight. 
+</p>
+<p>
+  <%= image_tag 'feature3.png', :alt => '' %>
+  Feature 3.
+</p>
 
-<%= form_tag session_path do %>
-  <div class="field">
-    <%= label_tag :email, 'Email Address' %><br />
-    <span class="value">
-      <%= email_field_tag :email, @email, :autofocus => true, :required => true,
-            :placeholder => 'your@email.com' %>
-    </span>
-  </div>
-  
-  <div class="field">
-    <%= label_tag :password %><br />
-    <span class="value">
-      <%= password_field_tag :password %>
-    </span>
-  </div>
-  
-  <div class="actions">
-    <%= button_tag 'Log in', :name => 'login', :value => 'requested' %>
-    <%= button_tag 'Reset Password', :name => 'reset_password',
-          :value => 'requested', :formaction => reset_password_session_path %>
-    
-    <% if @redirect_url %>
-    <%= hidden_field_tag :redirect_url, @redirect_url %>
-    <% end %>
-  </div>
-<% end %>
+<h2>Sign In</h2>
+
+<%= render 'session/login_form', :user => @user || User.new %>
+
+<h2>Sign Up</h2>
+
+<%= render 'users/form', :user => @user || User.new %>

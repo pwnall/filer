@@ -4,8 +4,7 @@ class SessionController < ApplicationController
   
   # Sets up the 'session/welcome' view. No user is logged in.
   def welcome
-    # You can brag about some statistics.
-    @user_count = User.count
+    render action: :new
   end
   private :welcome
 

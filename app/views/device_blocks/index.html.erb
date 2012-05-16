@@ -1,0 +1,21 @@
+<h1>Listing device_blocks</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @device_blocks.each do |device_block| %>
+  <tr>
+    <td><%= link_to 'Show', device_block %></td>
+    <td><%= link_to 'Edit', edit_device_block_path(device_block) %></td>
+    <td><%= link_to 'Destroy', device_block, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Device block', new_device_block_path %>

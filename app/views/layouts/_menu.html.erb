@@ -9,10 +9,17 @@
 <li>
   <%= link_to 'Action', '#' %>
 </li>
+<% if current_user.admin? %>
 <li>
-  <%= link_to 'username', '#' %>
+  <%= link_to 'Admin', '#' %>
   <ol>
-    <li><%= link_to 'Sign out', '#' %></li>
-    <li><%= link_to 'Settings', '#' %></li>
+    <li><%= link_to 'Devices', devices_path %></li>
+  </ol>
+</li>
+<% end %>
+<li>
+  <%= link_to current_user.email, '#' %>
+  <ol>
+    <li><%= link_to 'Sign out', session_path, method: :delete %></li>
   </ol>
 </li>

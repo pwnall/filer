@@ -1,5 +1,9 @@
 Filer::Application.routes.draw do
-  resources :devices
+  resources :users
+  
+  resources :devices do
+    resources :blocks, controller: 'DeviceBlocks'
+  end
 
   resources :nodes
 

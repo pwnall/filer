@@ -1,0 +1,25 @@
+<%= form_tag session_path do %>
+  <section class="fields">
+	  <p class="field">
+	    <%= label_tag :email, 'Email Address' %>
+	    <span class="value">
+		    <%= email_field_tag :email, @email %>
+		  </span>
+	  </p>
+  
+		<p class="field">
+		  <%= label_tag :password %>
+	    <span class="value">
+			  <%= password_field_tag :password %>
+		  </span>
+		</p>
+  </section>
+  
+  <p class="action">
+    <%= submit_tag 'Log in' %>
+    
+    <% if @redirect_url %>
+    <%= hidden_field_tag :redirect_url, @redirect_url %>
+    <% end %>
+  </p>
+<% end %>
