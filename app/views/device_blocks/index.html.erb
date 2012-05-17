@@ -1,21 +1,36 @@
-<h1>Listing device_blocks</h1>
+<h1>Device Blocks</h1>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= form_tag do |f| %>
+	<section class="fields">
+	<p class="field">
+		<%= label :allocate, 'Allocate blocks' %>
+		<span class="value">
+			<%= number_field :allocate, nil, min: 0, max: @device.free_block_count %>
+		</span>
+		<span class="comment">
+			<%= @device.free_block_count %> available blocks
+		</span>
+	</p>
+	
+	<p class="field">
+		<%= label :release, 'Release blocks' %>
+		<span class="value">
+			<%= number_field :release, nil, min: 0, max: @device.blocks.free.count %>
+		</span>
+		<span class="comment">
+			<%= @device.blocks.free.count %> unused blocks
+		</span>
+	</p>
 
-<% @device_blocks.each do |device_block| %>
-  <tr>
-    <td><%= link_to 'Show', device_block %></td>
-    <td><%= link_to 'Edit', edit_device_block_path(device_block) %></td>
-    <td><%= link_to 'Destroy', device_block, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+	<p class="field">
+		<%= label :move, 'Move blocks' %>
+		<span class="value">
+			<%= number_field :move, nil, min: 0, disabled: true,
+			        max: @device.blocks.free.count %>
+		</span>
+		<span class="comment">
+			<%= @device.blocks.free.count %> used blocks
+		</span>
+	</p>
+	</section>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Device block', new_device_block_path %>

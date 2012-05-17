@@ -8,6 +8,9 @@ class Device < ActiveRecord::Base
   # The root of the file-system storing this device's blocks. 
   validates :dev_path, length: 1..64, presence: true
   
+  # The blocks already allocated on this device.
+  has_many :blocks, inverse_of: :device
+  
   # dev_path is automatically recomputed when path changes.
   def path=(new_path)
     begin

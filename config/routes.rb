@@ -1,7 +1,7 @@
 Filer::Application.routes.draw do
   resources :users
   
-  resources :devices do
+  resources :devices, except: [:edit] do
     resources :blocks, controller: 'DeviceBlocks'
   end
 

@@ -14,12 +14,13 @@
 ActiveRecord::Schema.define(:version => 20120512030619) do
 
   create_table "blocks", :force => true do |t|
-    t.string  "path",     :limit => 128,                :null => false
+    t.integer "device_id"
     t.integer "owner_id"
     t.integer "node0_id"
-    t.integer "serial",                  :default => 0, :null => false
+    t.integer "serial",    :default => 0, :null => false
   end
 
+  add_index "blocks", ["device_id"], :name => "index_blocks_on_device_id"
   add_index "blocks", ["node0_id", "serial"], :name => "index_blocks_on_node0_id_and_serial", :unique => true
   add_index "blocks", ["owner_id"], :name => "index_blocks_on_owner_id"
 

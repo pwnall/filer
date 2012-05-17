@@ -1,15 +1,9 @@
-<p id="notice"><%= notice %></p>
+<h1>Storage Device Details</h1>
 
-<p>
-  <b>Path:</b>
-  <%= @device.path %>
-</p>
-
-<p>
-  <b>Device path:</b>
-  <%= @device.dev_path %>
-</p>
-
-
-<%= link_to 'Edit', edit_device_path(@device) %> |
-<%= link_to 'Back', devices_path %>
+<dl>
+  <dt>Blocks at:</dt>
+  <dd><%= @device.path %></dd>
+  
+  <dt>Device root:</dt>
+  <dd><%= @device.dev_path %></dd>
+</dl>
