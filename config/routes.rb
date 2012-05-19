@@ -2,7 +2,9 @@ Filer::Application.routes.draw do
   resources :users
   
   resources :devices, except: [:edit] do
-    resources :blocks, controller: 'DeviceBlocks'
+    get '/blocks(.:format)' => 'device_blocks#index', as: :device_blocks
+    post '/blocks(/:count)(.:format)' => 'device_blocks#create'
+    delete '/blocks(/:count)(.:format)' => 'device_blocks#destroy'
   end
 
   resources :nodes

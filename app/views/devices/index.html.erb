@@ -22,6 +22,9 @@
     	<%= device.blocks.count %> blocks used
     <% end %>
     </td>
+    <td>
+      <%= link_to 'Blocks', device_blocks_path(device) %>
+    </td>
   </tr>
 <% end %>
 </table>

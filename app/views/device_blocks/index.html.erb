@@ -1,36 +1,89 @@
 <h1>Device Blocks</h1>
 
-<%= form_tag do |f| %>
-	<section class="fields">
-	<p class="field">
-		<%= label :allocate, 'Allocate blocks' %>
-		<span class="value">
-			<%= number_field :allocate, nil, min: 0, max: @device.free_block_count %>
-		</span>
-		<span class="comment">
-			<%= @device.free_block_count %> available blocks
-		</span>
-	</p>
-	
-	<p class="field">
-		<%= label :release, 'Release blocks' %>
-		<span class="value">
-			<%= number_field :release, nil, min: 0, max: @device.blocks.free.count %>
-		</span>
-		<span class="comment">
-			<%= @device.blocks.free.count %> unused blocks
-		</span>
-	</p>
+<p>
+  Blocks allocated at <code><%= @device.path %></code>
+</p>
 
-	<p class="field">
-		<%= label :move, 'Move blocks' %>
-		<span class="value">
-			<%= number_field :move, nil, min: 0, disabled: true,
-			        max: @device.blocks.free.count %>
-		</span>
-		<span class="comment">
-			<%= @device.blocks.free.count %> used blocks
-		</span>
-	</p>
-	</section>
-<% end %>
+<p>
+  Storage device root at <code><%= @device.path %></code>
+</p>
+
+<div data-pwnfx-scope="blocks-change">
+  <p>
+    Change:
+    <%= select_tag 'change-type', options_for_select(['Allocate', 'Release',
+      'Move'], []), 
+            'data-pwnfx-showif-source' => 'block-type' %>
+  </p>
+
+  <div data-pwnfx-showif="block-type" data-pwnfx-showif-scope="blocks-change"
+       data-pwnfx-showif-is="Allocate">
+    <%= form_tag device_blocks_path(@device), method: :post do %>
+      <section class="fields">
+      <p class="field">
+        <%= label :count, 'Allocate Block Count' %>
+        <span class="value">
+          <%= number_field :count, nil, min: 0,
+                  max: @device.free_block_count %>
+        </span>
+        <span class="comment">
+          <%= number_with_delimiter @device.free_block_count %> available
+          blocks
+        </span>
+      </p>
+      </section> 
+      <p class="action">
+        <%= button_tag do %>
+          Allocate Blocks
+        <% end %>
+      </p>
+    <% end %>
+  </div>
+  <div data-pwnfx-showif="block-type" data-pwnfx-showif-scope="blocks-change"
+       data-pwnfx-showif-is="Release">
+    <%= form_tag device_blocks_path(@device), method: :delete do %>
+      <section class="fields">
+      <p class="field">
+        <%= label :count, 'Release Block Count' %>
+        <span class="value">
+          <%= number_field :count, nil, min: 0,
+                  max: @device.blocks.free.count %>
+        </span>
+        <span class="comment">
+          <%= number_with_delimiter @device.blocks.free.count %> unused blocks
+        </span>
+      </p>
+      </section>
+      <p class="action">
+        <%= button_tag do %>
+          Release Blocks
+        <% end %>
+      </p>
+    <% end %>
+  </div>
+  <div data-pwnfx-showif="block-type" data-pwnfx-showif-scope="blocks-change"
+       data-pwnfx-showif-is="Move">
+    <%= form_tag device_blocks_path(@device), method: :put do %>
+      <section class="fields">
+      <p class="field">
+        <%= label :count, 'Move Block Count' %>
+        <span class="value">
+          <%= number_field :count, nil, min: 0, disabled: true,
+                  max: @device.blocks.free.count %>
+        </span>
+        <span class="comment">
+          <%= number_with_delimiter @device.blocks.free.count %> used blocks
+        </span>
+      </p>
+      </section>
+      
+      <p class="action">
+        <%= button_tag do %>
+          Move Blocks
+        <% end %>
+      </p>
+    <% end %>
+  </div>
+</div>
+</div>
+

@@ -14,33 +14,23 @@ class DeviceBlocksController < ApplicationController
     end
   end
 
-  # GET /devices/1/blocks/new
-  # GET /devices/1/blocks/new.json
-  def new
-    @device = Device.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @device }
-    end
-  end
-
-  # GET /devices/1/blocks/edit
-  def edit
-    @device = Device.find(params[:id])
-  end
-
   # POST /devices/1/blocks
   # POST /devices/1/blocks.json
   def create
-    @device = Device.new(params[:device])
+    @count = params[:count].to_i
+    success = true
+    1.upto @count do |i|
+      unless @device.create_block
+        success = false
+      end
+    end
 
     respond_to do |format|
-      if @device.save
+      if success
         format.html { redirect_to @device, notice: 'Device block was successfully created.' }
         format.json { render json: @device, status: :created, location: @device }
       else
-        format.html { render action: "new" }
+        format.html { render action: :index }
         format.json { render json: @device.errors, status: :unprocessable_entity }
       end
     end
