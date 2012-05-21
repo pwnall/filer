@@ -8,7 +8,8 @@ class Block < ActiveRecord::Base
   # The block number, for a node with more than one block.
   validates :serial, presence: { unless: lambda { node0.nil? } },
       numericality: { allow_nil: true, greater_than_or_equal_to: 0 },
-      uniqueness: { allow_nil: true, scope: [:node0_id] }
+      uniqueness: { allow_nil: true, scope: [:node0_id],
+                    unless: :nil? }
 
   # The storage device backing this block.
   #
@@ -26,5 +27,11 @@ class Block < ActiveRecord::Base
   # @return [Integer] system block size, guaranteed to be a power of two
   def self.size
     1.megabyte
+  end
+
+  # Path to the file storing the block's contents.
+  # @return [String] fully expanded path pointing to the block's file
+  def file_path
+    File.join device.path, id.to_s(16)
   end
 end

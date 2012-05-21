@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(:version => 20120512030619) do
     t.integer "device_id"
     t.integer "owner_id"
     t.integer "node0_id"
-    t.integer "serial",    :default => 0, :null => false
+    t.integer "serial"
   end
 
   add_index "blocks", ["device_id", "owner_id"], :name => "index_blocks_on_device_id_and_owner_id"

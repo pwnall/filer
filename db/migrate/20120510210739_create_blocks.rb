@@ -4,7 +4,7 @@ class CreateBlocks < ActiveRecord::Migration
       t.references :device, null: true
       t.references :owner, null: true
       t.references :node0, null: true
-      t.integer :serial, null: false, default: 0
+      t.integer :serial, null: true
     end
     
     add_index :blocks, [:node0_id, :serial], null: true, unique: true

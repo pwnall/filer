@@ -1,7 +1,8 @@
 <h1>Storage</h1>
 
 <p>
-	<%= Block.free.count %> / <%= Block.count %> blocks free
+	<%= number_with_delimiter Block.free.count %> /
+  <%= number_with_delimiter Block.count %> blocks free
 </p>
 
 <table>
@@ -13,13 +14,14 @@
   <tr>
     <td><%= link_to device.path, device %></td>
     <td><%= device.dev_path %></td>
-    <td><%= device.free_block_count %> free blocks</td>
+    <td><%= number_with_delimiter device.free_block_count %> free blocks</td>
     <td>
     <% if device.blocks.count == 0 %>
     	<%= link_to 'Remove', device, confirm: 'Are you sure?', method: :delete %>
     <% else %>
-    	<%= device.blocks.count - device.blocks.free.count %> /
-    	<%= device.blocks.count %> blocks used
+    	<%= number_with_delimiter(device.blocks.count -
+                                device.blocks.free.count) %> /
+    	<%= number_with_delimiter device.blocks.count %> blocks used
     <% end %>
     </td>
     <td>

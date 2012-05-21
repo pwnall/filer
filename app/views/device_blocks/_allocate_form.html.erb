@@ -1,0 +1,21 @@
+<%= form_tag device_blocks_path(device), method: :post do %>
+  <section class="fields">
+  <p class="field">
+    <%= label :count, 'Allocate Block Count' %>
+    <span class="value">
+      <%= number_field_tag :count, nil, min: 0,
+              max: device.free_block_count %>
+    </span>
+    <span class="comment">
+      <%= number_with_delimiter device.free_block_count %> available
+      blocks
+    </span>
+  </p>
+  </section> 
+  <p class="action">
+    <%= button_tag do %>
+      Allocate Blocks
+    <% end %>
+  </p>
+<% end %>
+

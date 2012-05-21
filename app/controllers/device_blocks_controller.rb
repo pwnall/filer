@@ -18,19 +18,15 @@ class DeviceBlocksController < ApplicationController
   # POST /devices/1/blocks.json
   def create
     @count = params[:count].to_i
-    success = true
-    1.upto @count do |i|
-      unless @device.create_block
-        success = false
-      end
-    end
 
     respond_to do |format|
-      if success
-        format.html { redirect_to @device, notice: 'Device block was successfully created.' }
+      if @device.create_blocks @count
+        format.html { redirect_to devices_path,
+                                  notice: "#{@count} blocks allocated" }
         format.json { render json: @device, status: :created, location: @device }
       else
-        format.html { render action: :index }
+        format.html { render action: :index,
+                             notice: 'Block allocation failed' }
         format.json { render json: @device.errors, status: :unprocessable_entity }
       end
     end
@@ -53,9 +49,13 @@ class DeviceBlocksController < ApplicationController
   # DELETE /devices/1
   # DELETE /devices/1.json
   def destroy
+    @count = params[:count].to_i
+    1.upto @count do
+      @device.blocks.free.last.destroy
+    end
     respond_to do |format|
-      format.html { redirect_to device_blocks_url }
-      format.json { head :no_content }
+      format.html { redirect_to devices_url, notice: 'Blocks released' }
+      format.json { render json: @device }
     end
   end
 end

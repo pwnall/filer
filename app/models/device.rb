@@ -22,9 +22,54 @@ class Device < ActiveRecord::Base
     super
   end
   
-  # Creates a block on the device.
+  # Atomically creates blocks on this device.
+  # @param [Integer] count number of blocks to be created
+  # @return [Array<Block>, NilClass] array of newly created Block instances, or
+  #     nil if the block allocation fails
+  def create_blocks(count)
+    begin
+      create_blocks! count
+    rescue
+      nil
+    end
+  end
+
+  # Atomically creates blocks on this device.
+  # @param [Integer] count number of blocks to be created
+  # @return [Array<Block>] array of newly created Block instances
+  def create_blocks!(count)
+    begin
+      result = []
+      1.upto count do |i|
+        result << create_block
+      end
+    rescue
+      result.each(&:destroy)
+      raise
+    end
+  end
+
+  # Creates a block on this device.
   # @return [Block] newly created Block instance
   def create_block
+    block = nil
+    f = nil
+    tf = Tempfile.new path
+    tf.close
+    begin
+      f = File.open tf.path, 'w'
+      f.allocate Block.size
+      f.close
+      block = Block.new
+      block.device = self
+      block.save!
+      File.rename tf.path, block.file_path
+    rescue
+      f.close if f && !f.closed?
+      block.destroy if block
+      tf.unlink if File.exist? tf.path
+      raise
+    end
     # TODO(pwnall): code
   end
 
