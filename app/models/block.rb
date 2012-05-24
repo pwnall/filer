@@ -34,4 +34,40 @@ class Block < ActiveRecord::Base
   def file_path
     File.join device.path, id.to_s(16)
   end
+
+  # Finds unused blocks.
+  #
+  # This method is intended to allocate blocks for usage in a node. It might do
+  # optimizations, such as finding a continuous set of blocks, or ensuring that
+  # all the returned blocks are on the same device.
+  #
+  # @param [User] owner the user that will become the owner of the blocks;
+  #                     required because blocks are marked as used by setting
+  #                     their owner
+  # @param [Integer] count the desired number of blocks
+  def self.find_free(owner, count)
+    # Best-fit allocation.
+    Device.all.sort_by { |d| d.blocks.free.count }.each do |device|
+      next unless device.blocks.free.count >= count
+      blocks = []
+      begin
+        1.upto count do |i|
+          Device.transaction do
+            block = Device.blocks.free.first
+            block.owner = owner
+            block.save!
+          end
+        end
+        return blocks if blocks.length == count
+      rescue
+        # The blocks will be de-allocated below.
+      end
+      blocks.each do |block|
+        block.owner = nil
+        block.save!
+      end
+    end
+    
+    nil
+  end
 end
