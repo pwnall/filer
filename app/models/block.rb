@@ -41,11 +41,11 @@ class Block < ActiveRecord::Base
   # optimizations, such as finding a continuous set of blocks, or ensuring that
   # all the returned blocks are on the same device.
   #
+  # @param [Integer] count the desired number of blocks
   # @param [User] owner the user that will become the owner of the blocks;
   #                     required because blocks are marked as used by setting
   #                     their owner
-  # @param [Integer] count the desired number of blocks
-  def self.find_free(owner, count)
+  def self.find_free(count, owner)
     # Best-fit allocation.
     Device.all.sort_by { |d| d.blocks.free.count }.each do |device|
       next unless device.blocks.free.count >= count

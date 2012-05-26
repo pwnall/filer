@@ -13,4 +13,18 @@ class Node < ActiveRecord::Base
   
   # Block list for blocks with multiple nodes.
   has_many :blocks, foreign_key: 'node0_id', inverse_of: :node0, order: :serial
+
+  # Allocates blocks to hold the node's contents.
+  def grab_space(node_size)
+    block_count = (node_size + Block.size + 1) / Block.size
+    blocks = Block.find_free count, owner
+    blocks.each.with_index do |block, index|
+      block.node = node
+      block.serial = index
+      block.save!
+    end
+    self.block0 = blocks.first
+    save!
+    self
+  end
 end
