@@ -15,3 +15,5 @@ admin.save!
 dev_path = Rails.root.join('tmp', 'blocks').to_s
 FileUtils.mkdir_p dev_path
 dev = Device.create path: dev_path
+
+dev.create_blocks! 100

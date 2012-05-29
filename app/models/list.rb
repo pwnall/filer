@@ -10,6 +10,6 @@ class List < Node
     list.size = 0
     list.save!
 
-    list.grab_space Block.size
+    list.charge_blocks_for_size Block.size
   end
 end

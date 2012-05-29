@@ -9,7 +9,7 @@ class Block < ActiveRecord::Base
   validates :serial, presence: { unless: lambda { node0.nil? } },
       numericality: { allow_nil: true, greater_than_or_equal_to: 0 },
       uniqueness: { allow_nil: true, scope: [:node0_id],
-                    unless: :nil? }
+                    unless: lambda { node0.nil? } }
 
   # The storage device backing this block.
   #
@@ -35,17 +35,16 @@ class Block < ActiveRecord::Base
     File.join device.path, id.to_s(16)
   end
 
-  # Finds unused blocks.
+  # Assigns blocks to a node, for storing its data.
   #
-  # This method is intended to allocate blocks for usage in a node. It might do
-  # optimizations, such as finding a continuous set of blocks, or ensuring that
-  # all the returned blocks are on the same device.
+  # This method might do optimizations, such as finding a continuous set of
+  # blocks, or ensuring that all the returned blocks are on the same device.
   #
   # @param [Integer] count the desired number of blocks
-  # @param [User] owner the user that will become the owner of the blocks;
+  # @param [] node  the user that will become the owner of the blocks;
   #                     required because blocks are marked as used by setting
   #                     their owner
-  def self.find_free(count, owner)
+  def self.find_free(count, node, serial0)
     # Best-fit allocation.
     Device.all.sort_by { |d| d.blocks.free.count }.each do |device|
       next unless device.blocks.free.count >= count
@@ -53,14 +52,16 @@ class Block < ActiveRecord::Base
       begin
         1.upto count do |i|
           Device.transaction do
-            block = Device.blocks.free.first
+            block = device.blocks.free.first
             block.owner = owner
             block.save!
+            blocks << block
           end
         end
         return blocks if blocks.length == count
-      rescue
+      rescue Exception => e
         # The blocks will be de-allocated below.
+        Rails.logger.error e.inspect + "\n" + e.backtrace.join("\n")
       end
       blocks.each do |block|
         block.owner = nil

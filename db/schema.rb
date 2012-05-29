@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20120512030619) do
   create_table "nodes", :force => true do |t|
     t.string   "type",       :limit => 16, :null => false
     t.integer  "size",                     :null => false
-    t.integer  "block0_id",                :null => false
+    t.integer  "block0_id"
     t.integer  "owner_id",                 :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false

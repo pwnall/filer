@@ -3,7 +3,7 @@ class CreateNodes < ActiveRecord::Migration
     create_table :nodes do |t|
       t.string :type, limit: 16, null: false
       t.integer :size, null: false
-      t.references :block0, null: false
+      t.references :block0, null: true
       t.references :owner, null: false
 
       t.timestamp :created_at, null: false
